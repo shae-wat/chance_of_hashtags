@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 
 #============Load data============
 
-paths = ['/home/shaelyn/data_mining/train.csv', '/home/shaelyn/data_mining/test.csv']
+paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_hashtags/test.csv']
 t = pds.read_csv(paths[0])
 t2 = pds.read_csv(paths[1])
-print t2 #display the data
+print t #display the data
 
 
 #============Data in correct form============
