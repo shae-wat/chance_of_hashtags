@@ -8,7 +8,7 @@ m=4635; %number movies
 k = 10; %number genres
 iterations = 30;
 lambda = 0.5; %****
-Iu = eye(k,k) %****
+I = eye(k,k); %****
 
 %=======Learn M and U given R=======
 
@@ -18,10 +18,10 @@ M = randn(k,m);
 %Alternating minimization
 
 for i=1:iterations
-    if(mod(i,2) == 0) %update M
-        M = inverse(U'*U + lambda*I)*U'*Ratings
-    else %update U
+    if(mod(i,2) == 0) %update U
         U = inverse(M'*M + lambda*I)*M'*Ratings
+    else %update M
+        M = inverse(U'*U + lambda*I)*U'*Ratings
     end
 end
 
