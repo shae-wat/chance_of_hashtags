@@ -33,6 +33,10 @@ RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(
 
 %=======Crossvalidation=======
 
+%We provide you with a matrix cvSet which contains indices for 10-fold Cross-validation set. Row cvSet(i, :) contains the indices for first cross-validation set. Thus, if you want to leave first set out and perform training on 2-10 sets, then you will type:
+trR1=trR;
+trR1(cvSet(1,:))=0;
+
 %=======Plot RMSE=======
 
 %=======Results=======
