@@ -25,6 +25,12 @@ for i=1:iterations
     end
 end
 
+%Predict
+
+PredictedRatings = U*M'
+
+RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
+
 %=======Crossvalidation=======
 
 %=======Plot RMSE=======
