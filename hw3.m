@@ -21,7 +21,7 @@ M = randn(m,k);
 %Alternating minimization
 
 for iteration=1:iterations
-    if(mod(i,2) == 0) %update U
+    if(mod(iteration,2) == 0) %update U
         %for each user
         for i=1:size(R,1)
             %***how to write M()
