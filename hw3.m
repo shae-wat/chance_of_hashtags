@@ -20,19 +20,26 @@ M = randn(m,k);
 %Alternating minimization
 
 for iteration=1:iterations
-    if(mod(iteration,2) == 0) %update U
+    %if(mod(iteration,2) == 0) %=====update U
         %for each user
         for i=1:size(R,1)
-            %***how to write M()
-            U(i,:) = inverse(M(i,:)'*M(i,:) + lambda*I)*M(i,:)'*R(i,:)
+            for movie=1:size(R,2)
+                if(R(i,movie) ~= 0)
+                    U(i,:) = inverse(nonzeros(M(i,:))'*nonzeros(M(i,:)) + lambda*I)*nonzeros(M(i,:))'*nonzeros(R(i,:))
+                end
+            end
         end
-    else %update M
+    %else %=====update M
         %for each movie
         for j=1:size(R,2)
-            P = U(j,:)'*U(j,:)
-            M(j,:) = inverse(U(j,:)'*U(j,:) + lambda*I)*U(j,:)'*R(:,j)
+            for user=1:size(R,1)
+                if(R(user,j) ~= 0)
+                    P = U(user,j)'*U(user,j) + lambda*I
+                    M(user,j) = inverse(U(user,j)'*U(user,j) + lambda*I)*U(user,j)'*R(user,j)
+                end
+            end
         end
-    end
+    %end
 end
 
 %Predict
