@@ -12,16 +12,22 @@ I = eye(k,k); %****
 
 %=======Learn M and U given R=======
 
+R = nonzeros(Ratings);
 U = randn(u,k);
-M = randn(k,m);
+Uk = nonzeros(U);
+M = randn(m,k);
+Mk = nonzeros(M);
 
 %Alternating minimization
 
-for i=1:iterations
+for iteration=1:iterations
     if(mod(i,2) == 0) %update U
-        U = inverse(M'*M + lambda*I)*M'*Ratings
+        U = inverse(Mk'*Mk + lambda*I)*Mk'*R
     else %update M
-        M = inverse(U'*U + lambda*I)*U'*Ratings
+        %redefinecolumns of M
+        for j=1:size(M,2);
+            M(:,j) = inverse(Uk(:,j)'*Uk(:,j) + lambda*I)*Uk(:,j)'*R(:,j)
+        end
     end
 end
 
