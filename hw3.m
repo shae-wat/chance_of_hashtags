@@ -12,21 +12,25 @@ I = eye(k,k); %****
 
 %=======Learn M and U given R=======
 
-R = nonzeros(Ratings);
+R = nonzeros(Ratings)
 U = randn(u,k);
-Uk = nonzeros(U);
+%Uk = nonzeros(U);
 M = randn(m,k);
-Mk = nonzeros(M);
+%Mk = nonzeros(M);
 
 %Alternating minimization
 
 for iteration=1:iterations
     if(mod(i,2) == 0) %update U
-        U = inverse(Mk'*Mk + lambda*I)*Mk'*R
+        %for each user
+        for i=1:size(R,1)
+            %***how to write M()
+            U(i,:) = inverse(M(i,:)'*M(i,:) + lambda*I)*M(i,:)'*R(i,:)
+        end
     else %update M
-        %redefinecolumns of M
-        for j=1:size(M,2);
-            M(:,j) = inverse(Uk(:,j)'*Uk(:,j) + lambda*I)*Uk(:,j)'*R(:,j)
+        %for each movie
+        for j=1:size(R,2)
+            M(j,:) = inverse(U(j,:)'*U(j,:) + lambda*I)*U(j,:)'*R(:,j)
         end
     end
 end
