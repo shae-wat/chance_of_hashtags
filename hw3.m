@@ -14,9 +14,8 @@ I = eye(k,k); %****
 
 R = nonzeros(Ratings)
 U = randn(u,k);
-%Uk = nonzeros(U);
 M = randn(m,k);
-%Mk = nonzeros(M);
+
 
 %Alternating minimization
 
@@ -30,6 +29,7 @@ for iteration=1:iterations
     else %update M
         %for each movie
         for j=1:size(R,2)
+            P = U(j,:)'*U(j,:)
             M(j,:) = inverse(U(j,:)'*U(j,:) + lambda*I)*U(j,:)'*R(:,j)
         end
     end
