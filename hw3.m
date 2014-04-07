@@ -46,7 +46,7 @@ M = randn(m,k);
 
 %Predict
 
-PredictedRatings = U*M'
+PredictedRatings = U*M';
 
 RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
 
