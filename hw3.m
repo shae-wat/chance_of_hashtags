@@ -31,12 +31,9 @@ for iteration=1:iterations
         end
     else %=====update M
         %for each movie
-        
-        [r,c,v] = find(Ratings)
-        
         for j=1:size(Ratings,2)
         
-            
+            rkj = Ratings(find(Ratings))
         
         
             %Rkj = Ratings(:,j)
