@@ -32,10 +32,10 @@ for iteration=1:iterations
     else %=====update M
         %for each movie
         for j=1:size(Ratings,2)
-            Rkj = Ratings(:,j)~=0
+            Rkj = Ratings(:,j)
             Ukj = nonzeros(U(:,j))
             P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
-            M(j,:) = inverse(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*nonzeros(Ratings(:,j))
+            M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*nonzeros(Ratings(:,j))
         end
     end
 end
