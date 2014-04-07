@@ -33,7 +33,7 @@ for iteration=1:iterations
         %for each movie
         for j=1:size(Ratings,2)
         
-            rkj = Ratings(find(Ratings))
+            rkj = Ratings(find(Ratings));
         
         
             %Rkj = Ratings(:,j)
