@@ -34,6 +34,9 @@ M = randn(m,k);
         for j=4630:size(Ratings,2)
         
             r = Ratings(:,j)
+            for k = 1:length(r)
+                rkkk = r(k)
+            end
             rkj = nonzeros(Ratings(:,j))
         
         
