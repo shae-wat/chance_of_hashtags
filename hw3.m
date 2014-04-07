@@ -31,9 +31,10 @@ M = randn(m,k);
         %end
     %else %=====update M
         %for each movie
-        for j=1:size(Ratings,2)
+        for j=4630:size(Ratings,2)
         
-            rkj = nonzeros(Ratings(:,j));
+            r = Ratings(:,j)
+            rkj = nonzeros(Ratings(:,j))
         
         
             %Rkj = Ratings(:,j)
