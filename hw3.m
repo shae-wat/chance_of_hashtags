@@ -25,10 +25,10 @@ for iteration=1:iterations
         for i=1:size(Ratings,1)
             %r=user who rated movie
             %v=rating
-            [Rr,Rc,Rv] = find(Ratings(i,:));
-            Mk = M(Rr, :);
+            [Rur,Ruc,Ruv] = find(Ratings(i,:));
+            Mk = M(Rur, :);
             
-            U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Rv;
+            U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv;
         end
     else %=====update M
         %for each movie
