@@ -28,7 +28,7 @@ for iteration=1:iterations
             [Rur,Ruc,Ruv] = find(Ratings(i,:));
             Mk = M(Rur, :);
             
-            U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv;
+            U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv';
         end
     else %=====update M
         %for each movie
