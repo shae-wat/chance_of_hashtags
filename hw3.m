@@ -31,11 +31,18 @@ for iteration=1:iterations
         end
     else %=====update M
         %for each movie
+        
+        [r,c,v] = find(Ratings)
+        
         for j=1:size(Ratings,2)
-            Rkj = Ratings(:,j)
-            Ukj = nonzeros(U(:,j))
-            P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
-            M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*Ratings(:,j)
+        
+            
+        
+        
+            %Rkj = Ratings(:,j)
+            %Ukj = nonzeros(U(:,j))
+            %P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
+            %M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*Ratings(:,j)
         end
     end
 end
