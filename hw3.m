@@ -12,7 +12,7 @@ I = eye(k,k); %****
 
 %=======Learn M and U given R=======
 
-R = nonzeros(Ratings)
+%R = nonzeros(Ratings)
 U = randn(u,k);
 M = randn(m,k);
 
@@ -20,26 +20,26 @@ M = randn(m,k);
 %Alternating minimization
 
 for iteration=1:iterations
-    %if(mod(iteration,2) == 0) %=====update U
+    if(mod(iteration,2) == 0) %=====update U
         %for each user
         for i=1:size(R,1)
             for movie=1:size(R,2)
                 if(R(i,movie) ~= 0)
-                    U(i,:) = inverse(nonzeros(M(i,:))'*nonzeros(M(i,:)) + lambda*I)*nonzeros(M(i,:))'*nonzeros(R(i,:))
+                    U(i,:) = inverse(nonzeros(M(i,:))'*nonzeros(M(i,:)) + lambda*I)*nonzeros(M(i,:))'*nonzeros(Ratings(i,:))
                 end
             end
         end
-    %else %=====update M
+    else %=====update M
         %for each movie
         for j=1:size(R,2)
             for user=1:size(R,1)
                 if(R(user,j) ~= 0)
                     P = U(user,j)'*U(user,j) + lambda*I
-                    M(user,j) = inverse(U(user,j)'*U(user,j) + lambda*I)*U(user,j)'*R(user,j)
+                    M(user,j) = inverse(U(user,j)'*U(user,j) + lambda*I)*U(user,j)'*Ratings(user,j)
                 end
             end
         end
-    %end
+    end
 end
 
 %Predict
