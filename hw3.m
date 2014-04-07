@@ -4,17 +4,35 @@ load hw3_netflix.mat
 
 %alt_min.m contains learning function
 
-%=======Crossvalidation=======
+%Loop over lambdas
+lambdas = [0: 0.05: 1];
+lambda_av_rmse = randn(length(lambdas),1); %hold results
+for l = 1:length(lambdas)
 
+	%=======Crossvalidation=======
 
-trR1=trR;
-trR1(cvSet(1,:))=0;
- %Now you train using trR1 data and after you find out the solution matrix U1 and M1, calculate RMSE using:
-[U1,M1] = alt_min(trR1);
-PredictedRatings1 = U1*M1';
-RMSE1 = sqrt(sum(sum((PredictedRatings1(cvSet(1,:))-trR(cvSet(1,:))).^2))/length(cvSet(1,:)))
+	total_RMSE = 0;
+	for crossSet = 1:size(cvSet,1)
+		%select cross validation set
+		trRc=trR;
+		trRc(cvSet(crossSet,:))=0;
+		lambda = lambdas(l)
+		[U1,M1] = alt_min(trRc, lambda); %alternating minimization on this set with this lambda value
+		PredictedRatingc = U1*M1';
+		RMSEc = sqrt(sum(sum((PredictedRatingc(cvSet(crossSet,:))-trR(cvSet(crossSet,:))).^2))/length(cvSet(crossSet,:)))
+	
+		%total RMSE for this lambda
+		total_RMSE = total_RMSE + RMSEc;
+	end
+	%average RMSE for this lambda
+	av_RMSE = total_RMSE/10;
+	lambda_av_rmse(l) = av_RMSE;
+
+end
 
 %=======Plot RMSE=======
+
+plot(lambdas, lambda_av_rmse)
 
 %=======Results=======
 

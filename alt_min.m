@@ -1,4 +1,4 @@
-function [U,M] = alt_min(R)
+function [U,M] = alt_min(R, lambda)
 
     %u = 1978; %number users
     u = size(R,1);
@@ -10,8 +10,6 @@ function [U,M] = alt_min(R)
 
     U = randn(u,k);
     M = randn(m,k);
-
-    lambda = 0.5;
 
     for iteration=1:iterations
         if(mod(iteration,2) == 0) %=====update U
