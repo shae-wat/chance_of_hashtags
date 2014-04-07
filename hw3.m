@@ -2,7 +2,7 @@
 
 load hw3_netflix.mat
 
-
+%alt_min.m contains learning function
 
 %=======Crossvalidation=======
 
