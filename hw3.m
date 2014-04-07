@@ -47,7 +47,7 @@ end
 
 PredictedRatings = U*M';
 
-%RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
+RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
 
 %=======Crossvalidation=======
 
