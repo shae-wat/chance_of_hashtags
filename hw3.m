@@ -33,7 +33,7 @@ M = randn(m,k);
         %for each movie
         for j=1:size(Ratings,2)
         
-            rkj = Ratings(:,j)~=0;
+            rkj = nonzeros(Ratings(:,j));
         
         
             %Rkj = Ratings(:,j)
