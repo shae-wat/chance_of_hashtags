@@ -19,8 +19,8 @@ M = randn(m,k);
 
 %Alternating minimization
 
-for iteration=1:iterations
-    if(mod(iteration,2) == 0) %=====update U
+%for iteration=1:iterations
+    %if(mod(iteration,2) == 0) %=====update U
         %for each user
         %for i=1:size(Ratings,1)
             %for movie=1:size(Ratings,2)
@@ -29,11 +29,11 @@ for iteration=1:iterations
                 %end
            % end
         %end
-    else %=====update M
+    %else %=====update M
         %for each movie
         for j=1:size(Ratings,2)
         
-            rkj = Ratings(find(Ratings));
+            rkj = Ratings(find(Ratings(:,j));
         
         
             %Rkj = Ratings(:,j)
@@ -41,8 +41,8 @@ for iteration=1:iterations
             %P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
             %M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*Ratings(:,j)
         end
-    end
-end
+    %end
+%end
 
 %Predict
 
