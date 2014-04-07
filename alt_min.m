@@ -38,6 +38,4 @@ function [U,M] = alt_min(R)
     %Predict
     PredictedRatings = U*M';
 
-    RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
-
 end
