@@ -32,20 +32,12 @@ M = randn(m,k);
     %else %=====update M
         %for each movie
         for j=4630:size(Ratings,2)
-        
             %r=user who rated movie
             %v=rating
+            [Rr,Rc,Rv] = find(Ratings(:,j));
+            Uk = U(Rr, :);
             
-            [Rr,Rc,Rv] = find(Ratings(:,j))
-            Uk = U(Rr, :)
-            
-            
-        
-        
-            %Rkj = Ratings(:,j)
-            %Ukj = nonzeros(U(:,j))
-            %P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
-            %M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*Ratings(:,j)
+            M(j,:) = inv(Uk'*Uk + lambda*I)*Uk'*Rv
         end
     %end
 %end
