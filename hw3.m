@@ -8,6 +8,7 @@ load hw3_netflix.mat
 lambdas = [0: 0.05: 1];
 lambda_av_rmse = randn(length(lambdas),1); %hold results
 for l = 1:length(lambdas)
+    lambda = lambdas(1,l)
 
 	%=======Crossvalidation=======
 
@@ -16,7 +17,6 @@ for l = 1:length(lambdas)
 		%select cross validation set
 		trRc=trR;
 		trRc(cvSet(crossSet,:))=0;
-		lambda = lambdas(1,l)
 		[U1,M1] = alt_min(trRc, lambda); %alternating minimization on this set with this lambda value
 		PredictedRatingc = U1*M1';
 		RMSEc = sqrt(sum(sum((PredictedRatingc(cvSet(crossSet,:))-trR(cvSet(crossSet,:))).^2))/length(cvSet(crossSet,:)))
