@@ -22,13 +22,13 @@ M = randn(m,k);
 for iteration=1:iterations
     if(mod(iteration,2) == 0) %=====update U
         %for each user
-        for i=1:size(Ratings,1)
-            for movie=1:size(Ratings,2)
+        %for i=1:size(Ratings,1)
+            %for movie=1:size(Ratings,2)
                 %if(R(i,movie) ~= 0)
                    % U(i,:) = inverse(nonzeros(M(i,:))'*nonzeros(M(i,:)) + lambda*I)*nonzeros(M(i,:))'*nonzeros(Ratings(i,:))
                 %end
-            end
-        end
+           % end
+        %end
     else %=====update M
         %for each movie
         for j=1:size(Ratings,2)
