@@ -35,7 +35,7 @@ for iteration=1:iterations
             Rkj = Ratings(:,j)
             Ukj = nonzeros(U(:,j))
             P = nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I
-            M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*nonzeros(Ratings(:,j))
+            M(j,:) = inv(nonzeros(U(:,j))'*nonzeros(U(:,j)) + lambda*I)*nonzeros(U(:,j))'*Ratings(:,j)
         end
     end
 end
