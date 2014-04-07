@@ -1,6 +1,7 @@
 %hw3
 
 load hw3_netflix.mat
+warning('off');
 
 %alt_min.m contains learning function
 
