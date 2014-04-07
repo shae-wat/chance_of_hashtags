@@ -10,48 +10,52 @@ iterations = 30;
 I = eye(k,k);
 
 %=======Learn M and U given R=======
-U = randn(u,k);
-M = randn(m,k);
-
-lambda = 0.5;
-
 %Alternating minimization
+function [U,M] = alt_min(R)
+    U = randn(u,k);
+    M = randn(m,k);
 
-for iteration=1:iterations
-    if(mod(iteration,2) == 0) %=====update U
-        %for each user
-        for i=1:size(Ratings,1)
-            %r=user who rated movie
-            %v=rating
-            [Rur,Ruc,Ruv] = find(Ratings(i,:));
-            Mk = M(Rur, :);
-            
-            U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv';
-        end
-    else %=====update M
-        %for each movie
-        for j=1:size(Ratings,2)
-            %r=user who rated movie
-            %v=rating
-            [Rr,Rc,Rv] = find(Ratings(:,j));
-            Uk = U(Rr, :);
-            
-            M(j,:) = inv(Uk'*Uk + lambda*I)*Uk'*Rv;
+    lambda = 0.5;
+
+    for iteration=1:iterations
+        if(mod(iteration,2) == 0) %=====update U
+            %for each user
+            for i=1:size(R,1)
+                %r=user who rated movie
+                %v=rating
+                [Rur,Ruc,Ruv] = find(R(i,:));
+                Mk = M(Rur, :);
+                
+                U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv';
+            end
+        else %=====update M
+            %for each movie
+            for j=1:size(R,2)
+                %r=user who rated movie
+                %v=rating
+                [Rr,Rc,Rv] = find(R(:,j));
+                Uk = U(Rr, :);
+                
+                M(j,:) = inv(Uk'*Uk + lambda*I)*Uk'*Rv;
+            end
         end
     end
+
+    %Predict
+    PredictedRatings = U*M';
+
+    RMSE = sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx);
+
 end
-
-%Predict
-PredictedRatings = U*M';
-
-RMSE = @(sqrt(sum(sum( (PredictedRatings(testIdx)-Ratings(testIdx).^2) )))/length(testIdx));
-
 %=======Crossvalidation=======
 
-%We provide you with a matrix cvSet which contains indices for 10-fold Cross-validation set. Row cvSet(i, :) contains the indices for first cross-validation set. Thus, if you want to leave first set out and perform training on 2-10 sets, then you will type:
+
 trR1=trR;
 trR1(cvSet(1,:))=0;
-vals = crossval(RMSE(trR1))
+ %Now you train using trR1 data and after you find out the solution matrix U1 and M1, calculate RMSE using:
+[U1,M1] = alt_min(trR1);
+PredictedRatings1 = U1*M1';
+RMSE1 = sqrt(sum(sum((PredictedRatings1(cvSet(1,:))-trR(cvSet(1,:))).^2))/length(cvSet(1,:)))
 
 %=======Plot RMSE=======
 
