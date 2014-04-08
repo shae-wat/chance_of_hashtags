@@ -6,7 +6,7 @@ warning('off');
 %alt_min.m contains learning function
 
 %Loop over lambdas
-lambdas = [0: 0.05: .5];
+lambdas = [.5: 0.05: 1];
 lambda_av_rmse = randn(length(lambdas),1); %hold results
 for l = 1:length(lambdas)
     lambda = lambdas(1,l)
