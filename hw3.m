@@ -7,7 +7,7 @@ warning('off');
 
 %Loop over lambdas
 lambdas = [.5: 0.05: 1];
-lambda_av_rmse = randn(length(lambdas),1); %hold results
+lambda_av_rmse = randn(length(lambdas),1); %hold averaged lambda results
 for l = 1:length(lambdas)
     lambda = lambdas(1,l)
 
