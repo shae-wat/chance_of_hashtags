@@ -6,7 +6,7 @@ warning('off');
 %alt_min.m contains learning function
 
 %Loop over lambdas
-lambdas = [0: 0.05: 1];
+lambdas = [0: 0.05: .5];
 lambda_av_rmse = randn(length(lambdas),1); %hold results
 for l = 1:length(lambdas)
     lambda = lambdas(1,l)
@@ -20,13 +20,13 @@ for l = 1:length(lambdas)
 		trRc(cvSet(crossSet,:))=0;
 		[U1,M1] = alt_min(trRc, lambda); %alternating minimization on this set with this lambda value
 		PredictedRatingc = U1*M1';
-		RMSEc = sqrt(sum(sum((PredictedRatingc(cvSet(crossSet,:))-trR(cvSet(crossSet,:))).^2))/length(cvSet(crossSet,:)))
+		RMSEc = sqrt(sum(sum((PredictedRatingc(cvSet(crossSet,:))-trR(cvSet(crossSet,:))).^2))/length(cvSet(crossSet,:)));
 	
 		%total RMSE for this lambda
 		total_RMSE = total_RMSE + RMSEc;
 	end
 	%average RMSE for this lambda
-	av_RMSE = total_RMSE/10;
+	av_RMSE = total_RMSE/10
 	lambda_av_rmse(l) = av_RMSE;
 
 end
