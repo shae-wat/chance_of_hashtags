@@ -18,7 +18,7 @@ function [U,M] = alt_min(R, lambda)
                 %r=user who rated movie
                 %v=rating
                 [Rur,Ruc,Ruv] = find(R(i,:));
-                Mk = M(Rur, :);
+                Mk = M(:, Rur);
                 
                 U(i,:) = inv(Mk'*Mk + lambda*I)*Mk'*Ruv';
             end
