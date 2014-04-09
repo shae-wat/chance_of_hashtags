@@ -6,7 +6,7 @@ warning('off');
 %alt_min.m contains learning function
 
 %Loop over lambdas
-lambdas = [.5: 0.05: 1];
+lambdas = [0: 0.05: 1];
 lambda_av_rmse = randn(length(lambdas),1); %hold averaged lambda results
 for l = 1:length(lambdas)
     lambda = lambdas(1,l)
@@ -44,7 +44,8 @@ optimal_lambda = 1;
 
 %RMSE for optimal lambda
 
-[U1,M1] = alt_min(trR, optimal_lambda);
+[U,M] = alt_min(trR, optimal_lambda);
+PredictedRatings = U*M';
 rsme_optimal = sqrt(sum(sum((PredictedRatings(testIdx)-Ratings(testIdx)).^2))/length(testIdx))
 
 
