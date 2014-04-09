@@ -1,4 +1,6 @@
 %=======Results=======
+load hw3_netflix.mat
+warning('off');
 
 %optimal lambda
 optimal_lambda = 1;
