@@ -33,7 +33,4 @@ function [U,M] = alt_min(R, lambda)
         end
     end
 
-    %Predict
-    PredictedRatings = U*M';
-
 end
