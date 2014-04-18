@@ -2,18 +2,21 @@
 
 import pandas as pds
 import numpy as npy
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+import nltk as nl
 
 
 #============Load data============
 
 paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_hashtags/test.csv']
-t = pds.read_csv(paths[0])
-t2 = pds.read_csv(paths[1])
-print t #display the data
+train = pds.read_csv(paths[0])
+#test = pds.read_csv(paths[1])
+print train #display the data
 
 
 #============Data in correct form============
+
+print train.tweet[1]
 
 #============Run algorithm on data============
 
