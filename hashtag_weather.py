@@ -11,12 +11,13 @@ import nltk as nl
 paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_hashtags/test.csv']
 train = pds.read_csv(paths[0]) #dataframe 
 #test = pds.read_csv(paths[1])
-print train #display the data
+#print train #display the data
 
 
 #============Data in correct form============
 for t in train.iterrows():
-    print t   
+    print t[1][1]
+
 
 #============Run algorithm on data============
 
