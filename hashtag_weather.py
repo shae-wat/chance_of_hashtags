@@ -4,7 +4,7 @@ import pandas as pds
 import numpy as npy
 #import matplotlib.pyplot as plt
 import nltk as nl
-
+from features import tweet_sentiment_features
 
 #============Load data============
 
@@ -15,8 +15,13 @@ train = pds.read_csv(paths[0]) #dataframe
 
 
 #============Data in correct form============
+
+#for each tweet and related info
 for t in train.iterrows():
-    print t[1][1]
+    print t[1][1] + "\n"  #prints each tweet
+    tweet_words = t[1][1].split()
+    print tweet_sentiment_features(tweet_words)
+    print "\n\n\n"
 
 
 #============Run algorithm on data============
