@@ -9,14 +9,14 @@ import nltk as nl
 #============Load data============
 
 paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_hashtags/test.csv']
-train = pds.read_csv(paths[0])
+train = pds.read_csv(paths[0]) #dataframe 
 #test = pds.read_csv(paths[1])
 print train #display the data
 
 
 #============Data in correct form============
-
-print train.tweet[1]
+for t in train.iterrows():
+    print t   
 
 #============Run algorithm on data============
 
