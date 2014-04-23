@@ -10,31 +10,25 @@ from features import tweet_sentiment_features
 
 paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_hashtags/test.csv']
 train = pds.read_csv(paths[0])  
-#test = pds.read_csv(paths[1])
-#print train #display the data
+test = pds.read_csv(paths[1])
+#print train, test #display the input data
 
-
-#============Data in correct form============
-
+sentiment_featureset = []
 #for each tweet and associated info
 for t in train.iterrows():
-    print t[1][1] + "\n"  #print each tweet
     tweet_words = t[1][1].split()
-    #print tweet_sentiment_features(tweet_words)
-    #print "\n\n\n"
-
-
-#============Train classifiers============
-
-#Naive Bayes
-sentiment_featuresetsS1 = {}
-for t in train.iterrows():
-    tweet_words = t[1][1].split()
-    s1 = t[1][4]
-    s2 = t[1][5]
-    s3 = t[1][6]
-    #sentiment_featuresetsS1[tweet_sentiment_features(tweet_words)] = s1
+    sentiment = (t[1][4], t[1][5], t[1][6])
+    #construct sentiment feature set
+    sentiment_featureset.append((tweet_sentiment_features(tweet_words), sentiment))
+ 
     
+#============Bayesian classification============
+
+train_set, test_set = sentiment_featureset[:300], sentiment_featureset[300:600]   
+bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
+print "bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
+bayesian_classifier.show_most_informative_features(5)
+
 
 #============Assess results============
 
