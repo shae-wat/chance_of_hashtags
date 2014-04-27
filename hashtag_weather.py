@@ -12,11 +12,12 @@ paths = ['/home/shaelyn/chance_of_hashtags/train.csv', '/home/shaelyn/chance_of_
 train = pds.read_csv(paths[0])  
 test = pds.read_csv(paths[1])
 #print train, test #display the input data
+stop_words = [line.strip().lower() for line in open('my_stop_words.txt')]
 
 sentiment_featureset = []
 #for each tweet and associated info
 for t in train.iterrows():
-    print "******\n TWEET \n ******\n" + t[1][1] + "\n"    #print tweets
+    #print "******\n TWEET \n ******\n" + t[1][1] + "\n"    #print tweets
     tweet_words = t[1][1].split()
 
     print "tweet words before: " + str(tweet_words)
@@ -39,10 +40,11 @@ for t in train.iterrows():
             punct_index = tweet_words[i].index(".")
             tweet_words.append(tweet_words[i][punct_index:])
             tweet_words[i] = tweet_words[i][:punct_index]
-        #remove common noise
-        #if "{link}" in tweet_words:
-         #   tweet_words.remove("{link}")
-            
+    for word in tweet_words:
+        if word in stop_words:
+            tweet_words.remove(word)
+    
+    
             
     #get training classification for this tweet
     sentiment = (t[1][4], t[1][5], t[1][6])
