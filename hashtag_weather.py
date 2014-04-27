@@ -75,21 +75,21 @@ for t in train.iterrows():
  
 
 #sentiment 
-train_set, test_set = sentiment_featureset[:20], sentiment_featureset[20:30] 
-bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
-print "sentiment bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
-bayesian_classifier.show_most_informative_features(5)
+s_train_set, s_test_set = sentiment_featureset[:200], sentiment_featureset[200:300] 
+s_bayesian_classifier = nl.NaiveBayesClassifier.train(s_train_set)
+print "sentiment bayesian classifier efficiency = " + str(nl.classify.accuracy(s_bayesian_classifier, s_test_set)) + "\n"
+s_bayesian_classifier.show_most_informative_features(5)
 
 #where
-train_set, test_set = where_featureset[:20], where_featureset[20:30] 
-bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
-print "where bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
-bayesian_classifier.show_most_informative_features(5)
+w_train_set, w_test_set = where_featureset[:200], where_featureset[200:300] 
+w_bayesian_classifier = nl.NaiveBayesClassifier.train(w_train_set)
+print "where bayesian classifier efficiency = " + str(nl.classify.accuracy(w_bayesian_classifier, w_test_set)) + "\n"
+w_bayesian_classifier.show_most_informative_features(5)
 
 #kind
-train_set, test_set = kind_featureset[:20], kind_featureset[20:30] 
-bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
-print "kind bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
+k_train_set, k_test_set = kind_featureset[:200], kind_featureset[200:300] 
+bayesian_classifier = nl.NaiveBayesClassifier.train(k_train_set)
+print "kind bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, k_test_set)) + "\n"
 bayesian_classifier.show_most_informative_features(5)
 
 
