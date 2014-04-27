@@ -15,12 +15,14 @@ test = pds.read_csv(paths[1])
 stop_words = [line.strip().lower() for line in open('my_stop_words.txt')]
 
 sentiment_featureset = []
+where_featureset = []
+kind_featureset = []
 #for each tweet and associated info
 for t in train.iterrows():
     #print "******\n TWEET \n ******\n" + t[1][1] + "\n"    #print tweets
     tweet_words = t[1][1].split()
 
-    print "tweet words before: " + str(tweet_words)
+    #print "tweet words before: " + str(tweet_words)
     for i in range(len(tweet_words)):
         #normalize words to same case
         tweet_words[i] = tweet_words[i].lower()
@@ -45,19 +47,49 @@ for t in train.iterrows():
             tweet_words.remove(word)
     
     
+    #print "******t[] composition"
+    #print t[1]
+    #print "tweet words after: " + str(tweet_words) + "\n\n"
+    
             
-    #get training classification for this tweet
-    sentiment = (t[1][4], t[1][5], t[1][6])
-    print "tweet words after: " + str(tweet_words) + "\n\n"
+    #get sentiment training classification for this tweet
+    sentiment = (t[1][4], t[1][5], t[1][6], t[1][7], t[1][8])
     #construct sentiment feature set
     sentiment_featureset.append((tweet_sentiment_features(tweet_words), sentiment))
+    
+    #get where training classification for this tweet
+    where = (t[1][9], t[1][10], t[1][11], t[1][12])
+    #construct where feature set
+    where_featureset.append((tweet_sentiment_features(tweet_words), sentiment))
+    
+    #get kind training classification for this tweet
+    kind = (t[1][13], t[1][14], t[1][15], t[1][16], t[1][17],
+            t[1][18], t[1][19], t[1][20], t[1][21], t[1][22],
+            t[1][23], t[1][24], t[1][25], t[1][26], t[1][27])
+    #construct where feature set
+    kind_featureset.append((tweet_sentiment_features(tweet_words), sentiment))
+    
  
     
 #============Bayesian classification============
+ 
 
-train_set, test_set = sentiment_featureset[:200], sentiment_featureset[200:400]   
+#sentiment 
+train_set, test_set = sentiment_featureset[:20], sentiment_featureset[20:30] 
 bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
-print "bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
+print "sentiment bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
+bayesian_classifier.show_most_informative_features(5)
+
+#where
+train_set, test_set = where_featureset[:20], where_featureset[20:30] 
+bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
+print "where bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
+bayesian_classifier.show_most_informative_features(5)
+
+#kind
+train_set, test_set = kind_featureset[:20], kind_featureset[20:30] 
+bayesian_classifier = nl.NaiveBayesClassifier.train(train_set)
+print "kind bayesian classifier efficiency = " + str(nl.classify.accuracy(bayesian_classifier, test_set)) + "\n"
 bayesian_classifier.show_most_informative_features(5)
 
 
