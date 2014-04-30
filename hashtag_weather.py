@@ -19,7 +19,7 @@ where_featureset = []
 kind_featureset = []
 #for each tweet and associated info
 for t in train.iterrows():
-    #print "******\n TWEET \n ******\n" + t[1][1] + "\n"    #print tweets
+    #print t[1][1] + "\n"    #print tweets
     tweet_words = t[1][1].split()
 
     #print "tweet words before: " + str(tweet_words)
