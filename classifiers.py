@@ -86,14 +86,15 @@ def bayes_classifier_sentiment(featuresets):
 		f_s4_range_count = f[1][3]
 		f_s5_range_count = f[1][4]
 
-		print f
 		for i in range(0,4):
 			for j in range(0,4):
-				print "f[1][i][1][j] = " + str(f[1][i][1][j])
-				print str(s_range_counts[i])
-				print "s_range_counts[i][1][j] = " + str(s_range_counts[i][1][j]) + "\n"
 				prob = float(f[1][i][1][j] + (.5*2)) / float(s_range_counts[i][1][j] + 2)
-				print "probs = " + str(prob)
+				f_probs[i][1][j] = prob
+
+		feature_rating_probabilities.append([f[0], f_probs])
+
+
+	return feature_rating_probabilities
 
 		
 

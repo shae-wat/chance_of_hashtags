@@ -80,7 +80,10 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 #============Bayesian classification============
 
 
-bayes_sentiment = bayes_classifier_sentiment(s_train_set)
+bayes_sent_feature_probabilities = bayes_classifier_sentiment(s_train_set)
+print "bayes_sent_feature_probabilities = "
+print bayes_sent_feature_probabilities
+
 
 
 
