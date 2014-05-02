@@ -24,7 +24,7 @@ def bayes_classifier_sentiment(featuresets):
 	feature_rating_counts = []
 
 	for f in featuresets:
-		print f
+		#print f
 
 		#count total number of occurances of s1-s5 ratings per range
 		si=0
@@ -50,16 +50,9 @@ def bayes_classifier_sentiment(featuresets):
 			f_s4_range_count = ["s4", [0,0,0,0,0]];
 			f_s5_range_count = ["s5", [0,0,0,0,0]];
 			f_range_count = [f_s1_range_count, f_s2_range_count, f_s3_range_count, f_s4_range_count, f_s5_range_count]
-			
-			print feature
-			print f_range_count
-			print "\n"
 
 			si = 0
 			for s in f[1]: 
-				#print "\n" + str(s)
-
-				#count total number of occurances
 				if (s_range0[0] <= s < s_range0[1]):
 					f_range_count[si][1][0] += 1
 				if (s_range1[0] <= s < s_range1[1]):
@@ -72,11 +65,37 @@ def bayes_classifier_sentiment(featuresets):
 					f_range_count[si][1][4] += 1
 				si += 1
 
-			print feature
-			print f_range_count
-			print "\n"
 			feature_rating_counts.append([feature, f_range_count])
-			#print feature_rating_counts
+
+	#==Calculate features rating probabilities
+	#per feature s1-5 per range
+
+	feature_rating_probabilities = []
+
+	for f in feature_rating_counts:
+		s1_probs = ["s1", [0,0,0,0,0]];
+		s2_probs = ["s2", [0,0,0,0,0]];
+		s3_probs = ["s3", [0,0,0,0,0]];
+		s4_probs = ["s4", [0,0,0,0,0]];
+		s5_probs = ["s5", [0,0,0,0,0]];
+		f_probs = [s1_probs, s2_probs, s3_probs, s4_probs, s5_probs]
+
+		f_s1_range_count = f[1][0]
+		f_s2_range_count = f[1][1]
+		f_s3_range_count = f[1][2]
+		f_s4_range_count = f[1][3]
+		f_s5_range_count = f[1][4]
+
+		print f
+		for i in range(0,4):
+			for j in range(0,4):
+				print "f[1][i][1][j] = " + str(f[1][i][1][j])
+				print str(s_range_counts[i])
+				print "s_range_counts[i][1][j] = " + str(s_range_counts[i][1][j]) + "\n"
+				prob = float(f[1][i][1][j] + (.5*2)) / float(s_range_counts[i][1][j] + 2)
+				print "probs = " + str(prob)
+
+		
 
 
 
