@@ -3,7 +3,7 @@ import numpy as npy
 #import matplotlib.pyplot as plt
 import nltk as nl
 from feature_extractor import tweet_sentiment_features
-from classifiers import bayes_classifier
+from classifiers import bayes_classifier_sentiment
 
 #============Load data============
 
@@ -80,7 +80,7 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 #============Bayesian classification============
 
 
-bayes_sentiment = bayes_classifier(s_train_set)
+bayes_sentiment = bayes_classifier_sentiment(s_train_set)
 
 
 
