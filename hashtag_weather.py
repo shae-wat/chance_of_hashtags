@@ -70,11 +70,11 @@ for t in train.iterrows():
 #============Training and testing sets============
 #TODO : implement cross validation
 
-s_train_set, s_test_set = sentiment_featureset[:500], sentiment_featureset[500:1000]
+s_train_set, s_test_set = sentiment_featureset[:50], sentiment_featureset[50:100]
 
-w_train_set, w_test_set = where_featureset[:500], where_featureset[500:1000] 
+w_train_set, w_test_set = where_featureset[:50], where_featureset[50:100] 
 
-k_train_set, k_test_set = kind_featureset[:500], kind_featureset[500:1000] 
+k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100] 
 
     
 #============Bayesian classification============

@@ -2,6 +2,12 @@
 
 def bayes_classifier(featureset):
 
+	feature_probabilities = []    #list of tuples [(feature, probability)]
+
 	for feature in featureset:
-		#compute posterior probability
 		print feature
+
+		#sentiment
+		if (len(feature[1]) == 5):
+			print "yes"
+
