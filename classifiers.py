@@ -22,6 +22,7 @@ def bayes_classifier_sentiment(featuresets):
 	s_range_counts = [s1_range_count, s2_range_count, s3_range_count, s4_range_count, s5_range_count]
 
 	feature_rating_counts = []
+	features = []    #track all features discovered in training
 
 	for f in featuresets:
 		#print f
@@ -66,6 +67,7 @@ def bayes_classifier_sentiment(featuresets):
 				si += 1
 
 			feature_rating_counts.append([feature, f_range_count])
+			features.append(feature)
 
 	#==Calculate features rating probabilities
 	#per feature s1-5 per range
@@ -94,7 +96,22 @@ def bayes_classifier_sentiment(featuresets):
 		feature_rating_probabilities.append([f[0], f_probs])
 
 
-	return feature_rating_probabilities
+	return feature_rating_probabilities, features
+
+
+
+def bayes_classify(feature_probabilities, test_featureset, features):
+	#print feature_probabilities
+	print features
+
+	# for feature in test_featureset:
+	# 	print feature
+	# 	#predict category ratings for this feature
+	# 	if (feature in features):
+	# 		print feature_probabilities.index(feature)
+	# 		print feature_probabilities[feature_probabilities.index(feature)]
+
+
 
 		
 

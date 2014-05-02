@@ -3,7 +3,7 @@ import numpy as npy
 #import matplotlib.pyplot as plt
 import nltk as nl
 from feature_extractor import tweet_sentiment_features
-from classifiers import bayes_classifier_sentiment
+from classifiers import bayes_classifier_sentiment, bayes_classify
 
 #============Load data============
 
@@ -65,6 +65,8 @@ for t in train.iterrows():
             t[1][23], t[1][24], t[1][25], t[1][26], t[1][27])
     #construct kind feature set
     kind_featureset.append((tweet_sentiment_features(tweet_words), kind))
+
+
     
  
 #============Training and testing sets============
@@ -80,9 +82,37 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 #============Bayesian classification============
 
 
-bayes_sent_feature_probabilities = bayes_classifier_sentiment(s_train_set)
-print "bayes_sent_feature_probabilities = "
-print bayes_sent_feature_probabilities
+bayes_sent_feature_probabilities, features = bayes_classifier_sentiment(s_train_set)
+print features 
+
+for t in test.iterrows():
+    #print t[1][1] + "\n" + str(t[1][2]) + "\n" + str(t[1][3]) + "\n"    #uncomment to print tweets
+    tweet_words = t[1][1].split()
+
+    #print "tweet words before preprocessing : " + str(tweet_words)
+    for i in range(len(tweet_words)):
+        #normalize words to same case
+        tweet_words[i] = tweet_words[i].lower()
+        #remove hashtag and mention characters from beginning of words
+        if tweet_words[i].startswith("#") or tweet_words[i].startswith("@"): 
+            tweet_words[i] = tweet_words[i][1:]
+        #separate punctuation
+        if "!" in tweet_words[i]:
+            punct_index = tweet_words[i].index("!")
+            tweet_words.append(tweet_words[i][punct_index:])
+            tweet_words[i] = tweet_words[i][:punct_index]
+        if "?" in tweet_words[i]:
+            punct_index = tweet_words[i].index("?")
+            tweet_words.append(tweet_words[i][punct_index:])
+            tweet_words[i] = tweet_words[i][:punct_index]
+        if "." in tweet_words[i]:
+            punct_index = tweet_words[i].index(".")
+            tweet_words.append(tweet_words[i][punct_index:])
+            tweet_words[i] = tweet_words[i][:punct_index]
+    for word in tweet_words:
+        if word in stop_words:
+            tweet_words.remove(word)
+    bayes_sentiment = bayes_classify(bayes_sent_feature_probabilities, tweet_sentiment_features(tweet_words), features)
 
 
 
