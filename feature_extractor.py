@@ -11,4 +11,3 @@ def tweet_sentiment_features(tweet):
 
 #def tweet_when_features(tweet):
 
-#def tweet_kind_features(tweet):

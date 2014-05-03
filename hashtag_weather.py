@@ -70,24 +70,21 @@ for t in train.iterrows():
     
  
 #============Training and testing sets============
-#TODO : implement cross validation
 
-s_train_set, s_test_set = sentiment_featureset[:50], sentiment_featureset[50:100]
-
-w_train_set, w_test_set = where_featureset[:50], where_featureset[50:100] 
-
-k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100] 
+s_train_set, s_test_set = sentiment_featureset[:6000], sentiment_featureset[6000:10000]
+w_train_set, w_test_set = where_featureset[:6000], where_featureset[6000:10000] 
+k_train_set, k_test_set = kind_featureset[:6000], kind_featureset[6000:10000] 
 
     
 #============Bayesian classification============
 
 
-#s_range_counts, s_feature_rating_counts, s_features = bayes_classifier_sentiment(s_train_set)
-#w_range_counts, w_feature_rating_counts, w_features = bayes_classifier_when(w_train_set)
+s_range_counts, s_feature_rating_counts, s_features = bayes_classifier_sentiment(s_train_set)
+w_range_counts, w_feature_rating_counts, w_features = bayes_classifier_when(w_train_set)
 k_counts, k_feature_rating_counts, k_features = bayes_classifier_kind(k_train_set)
 
-#s_feature_probabilities = s_calc_feature_probabilities(s_range_counts, s_feature_rating_counts)
-#w_feature_probabilities = w_calc_feature_probabilities(w_range_counts, w_feature_rating_counts)
+s_feature_probabilities = s_calc_feature_probabilities(s_range_counts, s_feature_rating_counts)
+w_feature_probabilities = w_calc_feature_probabilities(w_range_counts, w_feature_rating_counts)
 k_feature_probabilities = k_calc_feature_probabilities(k_counts, k_feature_rating_counts)
 
 for t in test.iterrows():
@@ -118,17 +115,11 @@ for t in test.iterrows():
         if word in stop_words:
             tweet_words.remove(word)
 
-    #bayes_sentiment = s_bayes_classify(s_feature_probabilities, tweet_sentiment_features(tweet_words), s_features)
-    #print "bayes sentiment = " + str(bayes_sentiment)
-    #bayes_when = w_bayes_classify(w_feature_probabilities, tweet_sentiment_features(tweet_words), w_features)
-    #print "bayes when = " + str(bayes_when)
+    bayes_sentiment = s_bayes_classify(s_feature_probabilities, tweet_sentiment_features(tweet_words), s_features)
+    print "bayes sentiment = " + str(bayes_sentiment)
+    bayes_when = w_bayes_classify(w_feature_probabilities, tweet_sentiment_features(tweet_words), w_features)
+    print "bayes when = " + str(bayes_when)
     bayes_kind = k_bayes_classify(k_feature_probabilities, tweet_sentiment_features(tweet_words), k_features)
     print "bayes kind = " + str(bayes_kind)
 
-
-#============Assess results============
-
-#============Result in correct form============
-
-#crossvalidation?
 
