@@ -3,7 +3,7 @@ import numpy as npy
 #import matplotlib.pyplot as plt
 import nltk as nl
 from feature_extractor import tweet_sentiment_features
-from classifiers import bayes_classifier_sentiment, bayes_classify, calc_feature_probabilities
+from classifiers import bayes_classifier_sentiment, s_bayes_classify, w_bayes_classify, s_calc_feature_probabilities, w_calc_feature_probabilities, bayes_classifier_when
 
 #============Load data============
 
@@ -83,8 +83,10 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 
 
 s_range_counts, s_feature_rating_counts, s_features = bayes_classifier_sentiment(s_train_set)
+w_range_counts, w_feature_rating_counts, w_features = bayes_classifier_when(w_train_set)
 #print s_features 
-feature_probabilities = calc_feature_probabilities(s_range_counts, s_feature_rating_counts)
+s_feature_probabilities = s_calc_feature_probabilities(s_range_counts, s_feature_rating_counts)
+w_feature_probabilities = w_calc_feature_probabilities(w_range_counts, w_feature_rating_counts)
 
 for t in test.iterrows():
     print "\n\n" + t[1][1] + "\n" + str(t[1][2]) + "\n" + str(t[1][3]) + "\n"    #uncomment to print tweets
@@ -114,20 +116,10 @@ for t in test.iterrows():
         if word in stop_words:
             tweet_words.remove(word)
 
-    bayes_sentiment = bayes_classify(feature_probabilities, tweet_sentiment_features(tweet_words), s_features)
+    bayes_sentiment = s_bayes_classify(s_feature_probabilities, tweet_sentiment_features(tweet_words), s_features)
     print "bayes sentiment = " + str(bayes_sentiment)
-
-
-
-#where
-#w_bayesian_classifier = nl.NaiveBayesClassifier.train(w_train_set)
-#print "when bayesian classifier efficiency = " + str(nl.classify.accuracy(w_bayesian_classifier, w_test_set)) + "\n"
-#w_bayesian_classifier.show_most_informative_features(7)
-
-#kind
-#k_bayesian_classifier = nl.NaiveBayesClassifier.train(k_train_set)
-#print "kind bayesian classifier efficiency = " + str(nl.classify.accuracy(k_bayesian_classifier, k_test_set)) + "\n"
-#k_bayesian_classifier.show_most_informative_features(7)
+    bayes_when = w_bayes_classify(w_feature_probabilities, tweet_sentiment_features(tweet_words), w_features)
+    print "bayes when = " + str(bayes_when)
 
 
 #============Assess results============
