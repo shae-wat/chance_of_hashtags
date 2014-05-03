@@ -82,13 +82,12 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 #============Bayesian classification============
 
 
-s_range_counts, feature_rating_counts, features = bayes_classifier_sentiment(s_train_set)
-print features 
-
-feature_probabilities = calc_feature_probabilities(s_range_counts, feature_rating_counts)
+s_range_counts, s_feature_rating_counts, s_features = bayes_classifier_sentiment(s_train_set)
+#print s_features 
+feature_probabilities = calc_feature_probabilities(s_range_counts, s_feature_rating_counts)
 
 for t in test.iterrows():
-    #print t[1][1] + "\n" + str(t[1][2]) + "\n" + str(t[1][3]) + "\n"    #uncomment to print tweets
+    print "\n\n" + t[1][1] + "\n" + str(t[1][2]) + "\n" + str(t[1][3]) + "\n"    #uncomment to print tweets
     tweet_words = t[1][1].split()
 
     #print "tweet words before preprocessing : " + str(tweet_words)
@@ -115,21 +114,10 @@ for t in test.iterrows():
         if word in stop_words:
             tweet_words.remove(word)
 
-    bayes_sentiment = bayes_classify(feature_probabilities, tweet_sentiment_features(tweet_words), features)
+    bayes_sentiment = bayes_classify(feature_probabilities, tweet_sentiment_features(tweet_words), s_features)
+    print "bayes sentiment = " + str(bayes_sentiment)
 
 
-
-
-
-
-
-#for pdist in classifier.batch_prob_classify(test):
-#     print('%.4f %.4f' % (pdist.prob('x'), pdist.prob('y'))) 
-
-#sentiment  
-# s_bayesian_classifier = nl.NaiveBayesClassifier.train(s_train_set)
-# print "sentiment bayesian classifier efficiency = " + str(nl.classify.accuracy(s_bayesian_classifier, s_test_set)) + "\n"
-# s_bayesian_classifier.show_most_informative_features(7)
 
 #where
 #w_bayesian_classifier = nl.NaiveBayesClassifier.train(w_train_set)

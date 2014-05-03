@@ -133,7 +133,7 @@ def calc_feature_probabilities(s_range_counts, feature_rating_counts):
 
 
 def bayes_classify(feature_probabilities, test_featureset, features):
-	print "===test_featureset = " + str(test_featureset)
+	#print "===test_featureset = " + str(test_featureset)
 	#print features
 
 	tweet_feature_probabilities = []
@@ -180,11 +180,9 @@ def bayes_classify(feature_probabilities, test_featureset, features):
 			tweet_s5 = rating[4]
 
 	norm = float(tweet_s1 + tweet_s2 + tweet_s3 + tweet_s4 + tweet_s5)
-	print tweet_s1/norm, tweet_s2/norm, tweet_s3/norm, tweet_s4/norm, tweet_s5/norm
-	
+	tweet_classification = tweet_s1/norm, tweet_s2/norm, tweet_s3/norm, tweet_s4/norm, tweet_s5/norm
 
-
-	return tweet_classificatons
+	return tweet_classification
 
 
 
