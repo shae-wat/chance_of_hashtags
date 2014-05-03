@@ -3,7 +3,7 @@ import numpy as npy
 #import matplotlib.pyplot as plt
 import nltk as nl
 from feature_extractor import tweet_sentiment_features
-from classifiers import bayes_classifier_sentiment, bayes_classify
+from classifiers import bayes_classifier_sentiment, bayes_classify, calc_feature_probabilities
 
 #============Load data============
 
@@ -82,8 +82,10 @@ k_train_set, k_test_set = kind_featureset[:50], kind_featureset[50:100]
 #============Bayesian classification============
 
 
-bayes_sent_feature_probabilities, features = bayes_classifier_sentiment(s_train_set)
+s_range_counts, feature_rating_counts, features = bayes_classifier_sentiment(s_train_set)
 print features 
+
+feature_probabilities = calc_feature_probabilities(s_range_counts, feature_rating_counts)
 
 for t in test.iterrows():
     #print t[1][1] + "\n" + str(t[1][2]) + "\n" + str(t[1][3]) + "\n"    #uncomment to print tweets
@@ -112,7 +114,8 @@ for t in test.iterrows():
     for word in tweet_words:
         if word in stop_words:
             tweet_words.remove(word)
-    bayes_sentiment = bayes_classify(bayes_sent_feature_probabilities, tweet_sentiment_features(tweet_words), features)
+
+    bayes_sentiment = bayes_classify(feature_probabilities, tweet_sentiment_features(tweet_words), features)
 
 
 

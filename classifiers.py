@@ -25,7 +25,7 @@ def bayes_classifier_sentiment(featuresets):
 	features = []    #track all features discovered in training
 
 	for f in featuresets:
-		#print f
+		#print f[0]
 
 		#count total number of occurances of s1-s5 ratings per range
 		si=0
@@ -44,7 +44,8 @@ def bayes_classifier_sentiment(featuresets):
 			
 
 		#counts occurrances that appear per feature per range
-		for feature in f[0]:
+		for feature, value in f[0].iteritems():
+			#print "feature in f[0] = " + str(feature)
 			f_s1_range_count = ["s1", [0,0,0,0,0]];
 			f_s2_range_count = ["s2", [0,0,0,0,0]];
 			f_s3_range_count = ["s3", [0,0,0,0,0]];
@@ -66,50 +67,90 @@ def bayes_classifier_sentiment(featuresets):
 					f_range_count[si][1][4] += 1
 				si += 1
 
-			feature_rating_counts.append([feature, f_range_count])
-			features.append(feature)
+			feature_rating_counts.append([(feature,value), f_range_count])
 
-	#==Calculate features rating probabilities
-	#per feature s1-5 per range
+			#print feature, value
+			if (((feature,value) in features) == False):
+				features.append((feature, value))
+				# print "features appended ="
+				# print (feature, value)
+
+	return s_range_counts, feature_rating_counts, features
+
+def add_feature_counts(feature0, feature1):
+	#print "\nfeature0 = " + str(feature0)
+	#print "feature1 = " + str(feature1)
+	new_feature =  [['s1', [0,0,0,0,0]], ['s2', [0,0,0,0,0]], ['s3', [0,0,0,0,0]], ['s4', [0,0,0,0,0]], ['s5', [0,0,0,0,0]]]
+	for i in range(0,4):
+		for j in range(0,4):
+			count = feature0[1][i][1][j] + feature1[1][i][1][j]
+			new_feature[i][1][j] = count
+	#print "new_feature = " + str(new_feature)
+	return new_feature
+
+
+
+def calc_feature_probabilities(s_range_counts, feature_rating_counts):
+
+	feature_count_totals = []
+	for f_rating_count in feature_rating_counts:
+		for f in feature_count_totals:
+			if (cmp(f[0],f_rating_count[0]) == 0):
+				#print "f[0] = " + str(f[0]) + "\nf_rating_count[0] = " + str(f_rating_count[0]) 
+				new_feature_prob = add_feature_counts(f_rating_count, f)
+				f_rating_count[1] = new_feature_prob
+				#"******f_rating_count[1] = " + str(f_rating_count[1])
+				feature_count_totals.remove(f)
+		feature_count_totals.append(f_rating_count)
+		#print "=====feature_count_totals.append(f_rating_count) = " + str(f_rating_count)
+
 
 	feature_rating_probabilities = []
 
-	for f in feature_rating_counts:
-		s1_probs = ["s1", [0,0,0,0,0]];
-		s2_probs = ["s2", [0,0,0,0,0]];
-		s3_probs = ["s3", [0,0,0,0,0]];
-		s4_probs = ["s4", [0,0,0,0,0]];
-		s5_probs = ["s5", [0,0,0,0,0]];
+	for f_rating in feature_count_totals:
+		s1_probs = ["s1", [0,0,0,0,0]]
+		s2_probs = ["s2", [0,0,0,0,0]]
+		s3_probs = ["s3", [0,0,0,0,0]]
+		s4_probs = ["s4", [0,0,0,0,0]]
+		s5_probs = ["s5", [0,0,0,0,0]]
 		f_probs = [s1_probs, s2_probs, s3_probs, s4_probs, s5_probs]
 
-		f_s1_range_count = f[1][0]
-		f_s2_range_count = f[1][1]
-		f_s3_range_count = f[1][2]
-		f_s4_range_count = f[1][3]
-		f_s5_range_count = f[1][4]
 
 		for i in range(0,4):
 			for j in range(0,4):
-				prob = float(f[1][i][1][j] + (.5*2)) / float(s_range_counts[i][1][j] + 2)
+				prob = float(f_rating[1][i][1][j] + (.5*2)) / float(s_range_counts[i][1][j] + 2)
 				f_probs[i][1][j] = prob
 
-		feature_rating_probabilities.append([f[0], f_probs])
+		feature_rating_probabilities.append([f_rating[0], f_probs])
+		#print "feature_rating_probabilities appended" 
+		#print f_rating[0]
+		#print f_probs
+		#print "\n"
 
 
-	return feature_rating_probabilities, features
+	return feature_rating_probabilities
 
 
 
 def bayes_classify(feature_probabilities, test_featureset, features):
-	#print feature_probabilities
-	print features
+	#print test_featureset
+	#print features
 
-	# for feature in test_featureset:
-	# 	print feature
+	tweet_feature_probabilities = []
+
+	for feature, value in test_featureset.iteritems():
+	# 	#print feature, value
 	# 	#predict category ratings for this feature
-	# 	if (feature in features):
-	# 		print feature_probabilities.index(feature)
-	# 		print feature_probabilities[feature_probabilities.index(feature)]
+	# 	if (feature,value) in features:
+	# 		print "=IN FEATURES : " + str(feature) + str(value) + "\n"
+	# 		for f in feature_probabilities:
+	# 			if (cmp(f[0],(feature,value)) == 0):
+	# 				print "===cmp : " + str(f[0]) + str((feature,value)) + "\n"
+	# 				# print "===append f: " + str(f) + "\n"
+	# 				#tweet_feature_probabilities = decide(f, tweet_feature_probabilities)
+	# 				#print "tweet_feature_probabilities = " + str(tweet_feature_probabilities)
+
+	# 				#relevant_feature_sets.append(f)
 
 
 
