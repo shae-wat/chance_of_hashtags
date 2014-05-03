@@ -133,24 +133,26 @@ def calc_feature_probabilities(s_range_counts, feature_rating_counts):
 
 
 def bayes_classify(feature_probabilities, test_featureset, features):
-	#print test_featureset
+	print test_featureset
 	#print features
 
 	tweet_feature_probabilities = []
 
 	for feature, value in test_featureset.iteritems():
-	# 	#print feature, value
-	# 	#predict category ratings for this feature
-	# 	if (feature,value) in features:
-	# 		print "=IN FEATURES : " + str(feature) + str(value) + "\n"
-	# 		for f in feature_probabilities:
-	# 			if (cmp(f[0],(feature,value)) == 0):
-	# 				print "===cmp : " + str(f[0]) + str((feature,value)) + "\n"
-	# 				# print "===append f: " + str(f) + "\n"
+		print feature, value
+		# 	#predict category ratings for this feature
+		if (feature,value) in features:
+			#print "=IN FEATURES : " + str(feature) + str(value) + "\n"
+			for f in feature_probabilities:
+				if (cmp(f[0],(feature,value)) == 0):
+					#print "===cmp : " + str(f[0]) + str((feature,value)) + "\n"
+					#print "===append f: " + str(f) + "\n"
+					tweet_feature_probabilities.append(f)
 	# 				#tweet_feature_probabilities = decide(f, tweet_feature_probabilities)
 	# 				#print "tweet_feature_probabilities = " + str(tweet_feature_probabilities)
 
 	# 				#relevant_feature_sets.append(f)
+	print tweet_feature_probabilities
 
 
 
