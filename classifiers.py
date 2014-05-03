@@ -133,26 +133,58 @@ def calc_feature_probabilities(s_range_counts, feature_rating_counts):
 
 
 def bayes_classify(feature_probabilities, test_featureset, features):
-	print test_featureset
+	print "===test_featureset = " + str(test_featureset)
 	#print features
 
 	tweet_feature_probabilities = []
+	tweet_classificatons = []
 
 	for feature, value in test_featureset.iteritems():
-		print feature, value
-		# 	#predict category ratings for this feature
+		#print feature, value
+		# predict category ratings for this feature
 		if (feature,value) in features:
-			#print "=IN FEATURES : " + str(feature) + str(value) + "\n"
 			for f in feature_probabilities:
 				if (cmp(f[0],(feature,value)) == 0):
-					#print "===cmp : " + str(f[0]) + str((feature,value)) + "\n"
-					#print "===append f: " + str(f) + "\n"
 					tweet_feature_probabilities.append(f)
-	# 				#tweet_feature_probabilities = decide(f, tweet_feature_probabilities)
-	# 				#print "tweet_feature_probabilities = " + str(tweet_feature_probabilities)
 
-	# 				#relevant_feature_sets.append(f)
-	print tweet_feature_probabilities
+	for feature in tweet_feature_probabilities:
+		#print "*feature = " + str(feature)
+		s1 = feature[1][0][1].index(max(feature[1][0][1]))
+		s1 = (s1+1)*.2
+		s2 = feature[1][1][1].index(max(feature[1][1][1]))
+		s2 = (s2+1)*.2
+		s3 = feature[1][2][1].index(max(feature[1][2][1]))
+		s3 = (s3+1)*.2
+		s4 = feature[1][3][1].index(max(feature[1][3][1]))
+		s4 = (s4+1)*.2
+		s5 = feature[1][4][1].index(max(feature[1][4][1]))
+		s5 = (s5+1)*.2
+		tweet_classificatons.append([s1, s2, s3, s4, s5])
+
+	tweet_s1 = 0
+	tweet_s2 = 0
+	tweet_s3 = 0
+	tweet_s4 = 0
+	tweet_s5 = 0	
+
+	for rating in tweet_classificatons:
+		if rating[0] > tweet_s1:
+			tweet_s1 = rating[0]
+		if rating[1] > tweet_s2:
+			tweet_s2 = rating[1]
+		if rating[2] > tweet_s3:
+			tweet_s3 = rating[2]
+		if rating[3] > tweet_s4:
+			tweet_s4 = rating[3]
+		if rating[4] > tweet_s5:
+			tweet_s5 = rating[4]
+
+	norm = float(tweet_s1 + tweet_s2 + tweet_s3 + tweet_s4 + tweet_s5)
+	print tweet_s1/norm, tweet_s2/norm, tweet_s3/norm, tweet_s4/norm, tweet_s5/norm
+	
+
+
+	return tweet_classificatons
 
 
 
