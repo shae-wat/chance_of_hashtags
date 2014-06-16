@@ -147,11 +147,11 @@ def s_bayes_classify(feature_probabilities, test_featureset, features):
 		s5 = (s5+1)*.2
 		tweet_classificatons.append([s1, s2, s3, s4, s5])
 
-	tweet_s1 = 0
-	tweet_s2 = 0
-	tweet_s3 = 0
-	tweet_s4 = 0
-	tweet_s5 = 0	
+	tweet_s1 = .001
+	tweet_s2 = .001
+	tweet_s3 = .001
+	tweet_s4 = .001
+	tweet_s5 = .001	
 
 	for rating in tweet_classificatons:
 		if rating[0] > tweet_s1:
